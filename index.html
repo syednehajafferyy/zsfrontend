@@ -131,7 +131,7 @@ function ic(n){var l=String(n).toLowerCase();return el(/rice|paddy/.test(l)?"Ric
 function cards(){var g=$("#grid");if(!P.length){g.innerHTML='<p style="color:var(--soil)">No seeds are listed yet. Please check back soon or contact us.</p>';return}
 g.innerHTML=P.map(function(p,i){return'<article class="card" data-c="'+esc(p[1])+'"><div class="img">'+(p[3]?'<img src="'+esc(p[3])+'" alt="'+esc(p[0])+'" loading="lazy">':ic(p[0]))+'</div><div class="t"><small>'+esc(p[1])+'</small><h3>'+esc(p[0])+'</h3><p>'+esc(p[2])+'</p><a class="nl vd" href="#seeds" data-i="'+i+'">View Details</a><button class="btn solid add" data-n="'+esc(p[0])+'">Add to Cart</button></div></article>'}).join("")}
 document.addEventListener("click",function(e){var b=e.target.closest(".filters button");if(!b)return;$$(".filters button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});$$(".card").forEach(function(c){c.classList.toggle("hide",b.dataset.c!="all"&&c.dataset.c!=b.dataset.c)})});
-var API_BASE=window.API_BASE||"";
+var API_BASE=window.API_BASE||"https://zsbackend.vercel.app";
 function jf(u){return fetch(API_BASE+u).then(function(r){if(!r.ok)throw 0;return r.json()})}
 Promise.all([jf("/api/categories"),jf("/api/products")]).then(function(a){
 $("#flt").insertAdjacentHTML("beforeend",a[0].filter(function(c){return a[1].some(function(p){return p.categoryId===c.id})}).map(function(c){return'<button aria-pressed="false" data-c="'+esc(c.name)+'">'+esc(c.name)+'</button>'}).join(""));
